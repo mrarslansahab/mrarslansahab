@@ -1,0 +1,293 @@
+{% extends 'base.html' %}
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+    {% block title %}3leasintilbud.dk | Dealer Portal{% endblock %}	<meta charset="UTF-8">
+
+{% block content %}
+
+<head>
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="{% static 'vendor/animate/animate.css' %}">
+<!--===============================================================================================-->	
+	<link rel="stylesheet" type="text/css" href="{% static 'vendor/css-hamburgers/hamburgers.min.css' %}">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="{% static 'vendor/select2/select2.min.css' %}">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="{% static 'css/util.css' %}">
+	<link rel="stylesheet" type="text/css" href="{% static 'css/main.css' %}">
+<!--===============================================================================================-->
+</head>
+<style>
+	.sect{
+  display: none;
+  
+}
+.card{
+	border-radius: 25px !important;
+}
+
+</style>
+<body>
+	<div id="sect" class="limiter p-t-5">
+		<div class="container pt-5 pb-5">
+			<div class="card">
+				<div class="sect">
+					<div class="card-header mybg text-center">
+						<div class="card-title">
+							<h3>Please Select Your Package</h3> 
+						</div>
+					</div>
+				
+					<div class="demo pl-5">
+<div class="container p-5">
+<div class="row">
+{% if obj %}
+    {% for p in obj %}
+<div class="col-md-12 col-lg-4 col-sm-12 pr-5">
+<div class="pricingTable green">
+<div class="pricingTable-header">
+<i class="fa fa-briefcase"></i>
+<div class="price-value"> {{p.price}} <span class="month">per month</span> </div>
+</div>
+<h3 class="heading">{{ p.name }}</h3>
+<div class="pricing-content">
+<ul>
+ <li><b>lorem ipsum</b>{{p.limit }}</li>
+ <li><b>lorem ipsum</b> lorem</li>
+ <li><b>lorem ipsum</b> lorem</li>
+ <li><b>lorem ipsum</b> lorem</li>
+
+</ul>
+</div>
+<div class="pricingTable-signup">
+<a onclick="next({{ p.id }})" href="#">sign up</a>
+</div>
+</div>
+</div>
+    {% endfor %}
+    {% else %}
+    <h1>No Pacakages available sorry for this problem !</h1>
+    {% endif %}
+<div class="col-md-12 col-lg-4 col-sm-12 pr-5">
+  <div class="pricingTable blue">
+<div class="pricingTable-header">
+<i class="fa fa-diamond"></i>
+<div class="price-value"> $30.00 <span class="month">per month</span> </div>
+</div>
+<h3 class="heading">Premium</h3>
+<div class="pricing-content">
+<ul>
+  <li><b>lorem ipsum</b> lorem</li>
+  <li><b>lorem ipsum</b> lorem</li>
+  <li><b>lorem ipsum</b> lorem</li>
+  <li><b>lorem ipsum</b> lorem</li>
+ 
+</ul>
+</div>
+<div class="pricingTable-signup">
+<a href="#">sign up</a>
+</div>
+</div>
+</div>
+<div class="col-md-12 col-lg-4 col-sm-12 pr-5">
+  <div class="pricingTable red">
+<div class="pricingTable-header">
+<i class="fa fa-cube"></i>
+<div class="price-value"> $40.00 <span class="month">per month</span> </div>
+</div>
+<h3 class="heading">Extra</h3>
+<div class="pricing-content">
+<ul>
+  <li><b>lorem ipsum</b> lorem</li>
+  <li><b>lorem ipsum</b> lorem</li>
+  <li><b>lorem ipsum</b> lorem</li>
+  <li><b>lorem ipsum</b> lorem</li>
+ 
+</ul>
+</div>
+<div class="pricingTable-signup">
+<a href="#" onclick="next(2)">sign up</a>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+
+					</div>
+	
+		<div class="sect">
+			<div class="card-header mybg text-center">
+				<div class="card-title">
+					<h3>Please Enter Your Details</h3> 
+				</div>
+			</div>
+			<div class="card-body">
+				<div class="container">
+					<form method="post" class="validate-form">
+					<div class="row">
+						<div class="col-lg-12">
+							<div class="wrap-input100 validate-input" data-validate = "First Name is required">
+								<select name="pacakge" class="input100" id="pkg">
+									<option selected disabled value="">Please Select Your Pacakge</option>
+									{% if obj %}
+                                    {% for p in obj %}
+                                    <option value="{{ p.id }}">{{ p.name }}</option>
+                                    {% endfor %}
+                                        {% else %}
+                                        <option>No Package Available Thanks !</option>
+                                {% endif %}
+								</select>
+								<span class="focus-input100"></span>
+								<span class="symbol-input100">
+									<i class="fa fa-envelope" aria-hidden="true"></i>
+								</span>
+							</div>
+							</div>
+						<div class="col-lg-6">
+							<div class="wrap-input100 validate-input" data-validate = "First Name is required">
+								<input class="input100" type="text" name="fname" placeholder="first name">
+								<span class="focus-input100"></span>
+								<span class="symbol-input100">
+									<i class="fa fa-envelope" aria-hidden="true"></i>
+								</span>
+							</div>
+							<div class="wrap-input100 validate-input" data-validate = "Valid email is required: ex@abc.xyz">
+								<input class="input100" type="text" name="email" placeholder="Email">
+								<span class="focus-input100"></span>
+								<span class="symbol-input100">
+									<i class="fa fa-envelope" aria-hidden="true"></i>
+								</span>
+							</div>
+							<div class="wrap-input100 validate-input" data-validate = "Valid Contact is required: ex@abc.xyz">
+								<input class="input100" type="text" name="contact" placeholder="contact no">
+								<span class="focus-input100"></span>
+								<span class="symbol-input100">
+									<i class="fa fa-envelope" aria-hidden="true"></i>
+								</span>
+							</div>
+							<div class="wrap-input100 validate-input" data-validate = "Valid address is required: abc street123">
+								<input class="input100" type="text" name="address" placeholder="Street123...">
+								<span class="focus-input100"></span>
+								<span class="symbol-input100">
+									<i class="fa fa-envelope" aria-hidden="true"></i>
+								</span>
+							</div>
+							<div class="wrap-input100 validate-input" data-validate = "Valid Postal code is required: 0123456">
+								<input class="input100" type="text" name="postal_code" placeholder="Postal Code">
+								<span class="focus-input100"></span>
+								<span class="symbol-input100">
+									<i class="fa fa-envelope" aria-hidden="true"></i>
+								</span>
+							</div>
+						</div>
+						<div class="col-lg-6">
+					<div class="wrap-input100 validate-input" data-validate = "Last Name is required">
+						<input class="input100" type="text" name="lname" placeholder="last Name">
+						<span class="focus-input100"></span>
+						<span class="symbol-input100">
+							<i class="fa fa-envelope" aria-hidden="true"></i>
+						</span>
+					</div>
+					<div class="wrap-input100 validate-input" data-validate = "Telephone is required">
+						<input class="input100" type="text" name="Telephone" placeholder="Telephone">
+						<span class="focus-input100"></span>
+						<span class="symbol-input100">
+							<i class="fa fa-envelope" aria-hidden="true"></i>
+						</span>
+					</div>
+					<div class="wrap-input100 validate-input" data-validate = "Last Name is required">
+						<input class="input100" type="text" name="cvr" placeholder="CVR No.">
+						<span class="focus-input100"></span>
+						<span class="symbol-input100">
+							<i class="fa fa-envelope" aria-hidden="true"></i>
+						</span>
+					</div>
+					<div class="wrap-input100 validate-input" data-validate = "City is required">
+						<input class="input100" type="text" name="city" placeholder="City">
+						<span class="focus-input100"></span>
+						<span class="symbol-input100">
+							<i class="fa fa-envelope" aria-hidden="true"></i>
+						</span>
+					</div>
+
+					<div class="wrap-input100 validate-input" data-validate = "Password is required">
+						<input class="input100" type="password" name="pass" placeholder="Password">
+						<span class="focus-input100"></span>
+						<span class="symbol-input100">
+							<i class="fa fa-lock" aria-hidden="true"></i>
+						</span>
+					</div>
+                        </div>
+                            	<div class="col-lg-12">
+							<div class="wrap-input100 validate-input" data-validate = "First Name is required">
+								<select name="pacakge" class="input100" id="">
+									<option selected disabled value="">Please Select Dealer Type</option>
+									<option value="">1</option>
+									<option value="">1</option>
+								</select>
+								<span class="focus-input100"></span>
+								<span class="symbol-input100">
+									<i class="fa fa-envelope" aria-hidden="true"></i>
+								</span>
+							</div>
+							</div>
+					</div>
+					<div class="container p-t-5">
+						<button type="submit" class="login100-form-btn">
+							Sign Up
+						</button>
+				</form>
+						<div class="text-center p-t-50">
+							<a class="txt2" href="#">
+								Already Have Account!
+								<i class="fa fa-long-arrow-right m-l-5" aria-hidden="true"></i>
+							</a>
+						</div>
+					</div>
+					</div>
+					</div>
+					</div>
+				
+			</div>
+		</div>
+	</div>
+	</div>
+
+	{% endblock %}
+	{% block javascript %}
+
+	<script>
+        // displaying the first block of question
+        document.getElementsByClassName('sect')[0].style.display = "block";
+
+        // DEFINING THE NEXT FUNCTION
+        function next(id) {
+            var nxt="1"
+            document.getElementsByClassName('sect')[nxt-1].style.display = "none";
+            document.getElementsByClassName('sect')[nxt].style.display = "block";
+            const $select=document.querySelector("#pkg");
+            $select.value=id
+
+
+        }
+    </script>
+<!--===============================================================================================-->	
+	<script src="{% static 'vendor/jquery/jquery-3.2.1.min.js' %}"></script>
+<!--===============================================================================================-->
+	<script src="{% static 'vendor/bootstrap/js/popper.js' %}"></script>
+	<script src="{% static 'vendor/bootstrap/js/bootstrap.min.js' %}"></script>
+<!--===============================================================================================-->
+	<script src="{% static 'vendor/select2/select2.min.js' %}"></script>
+<!--===============================================================================================-->
+	<script src="{% static 'vendor/tilt/tilt.jquery.min.js' %}"></script>
+
+<!--===============================================================================================-->
+	<script src="{% static 'js/main.js' %}"></script>
+
+</body>
+</html>
+{% endblock %}

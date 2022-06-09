@@ -1,0 +1,101 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}3leasingtilbud{% endblock %}
+{% block content %}
+     <!-- HERO -->
+     <section class="hero hero-bg d-flex justify-content-center align-items-center">
+               <div class="container">
+                    <div class="row">
+
+                        <div class="col-lg-6 col-md-10 col-12 d-flex flex-column justify-content-center align-items-center">
+                              <div class="hero-text">
+
+                                   <h1 class="text-white" data-aos="fade-up">We help grow your car dealer with ready-to-buy customers
+                                   </h1>
+
+                                   <a href="contact.html" class="custom-btn btn-bg btn mt-3" data-aos="fade-up" data-aos-delay="100">Start Here !</a>
+
+                              </div>
+                        </div>
+
+                        <div class="col-lg-6 col-12">
+                          <div class="hero-image" data-aos="fade-up" data-aos-delay="300">
+
+                            <img src="{% static 'images/car3.png' %}" class="img-fluid" >
+                          </div>
+                        </div>
+
+                    </div>
+               </div>
+     </section>
+ <div class="demo">
+<div class="container p-5">
+<div class="row">
+
+<div class="col-md-6 col-lg-4 col-sm-6 pr-5">
+<div class="pricingTable green">
+<div class="pricingTable-header">
+<i class="fa fa-briefcase"></i>
+<div class="price-value"> $20.00 <span class="month">per month</span> </div>
+</div>
+<h3 class="heading">Business</h3>
+<div class="pricing-content">
+<ul>
+ <li><b>lorem ipsum</b> lorem</li>
+ <li><b>lorem ipsum</b> lorem</li>
+ <li><b>lorem ipsum</b> lorem</li>
+ <li><b>lorem ipsum</b> lorem</li>
+
+</ul>
+</div>
+<div class="pricingTable-signup">
+<a href="#">sign up</a>
+</div>
+</div>
+</div>
+<div class="col-md-6 col-lg-4 col-sm-6 pr-5">
+  <div class="pricingTable blue">
+<div class="pricingTable-header">
+<i class="fa fa-diamond"></i>
+<div class="price-value"> $30.00 <span class="month">per month</span> </div>
+</div>
+<h3 class="heading">Premium</h3>
+<div class="pricing-content">
+<ul>
+  <li><b>lorem ipsum</b> lorem</li>
+  <li><b>lorem ipsum</b> lorem</li>
+  <li><b>lorem ipsum</b> lorem</li>
+  <li><b>lorem ipsum</b> lorem</li>
+ 
+</ul>
+</div>
+<div class="pricingTable-signup">
+<a href="#">sign up</a>
+</div>
+</div>
+</div>
+<div class="col-md-6 col-lg-4 col-sm-6 pr-5">
+  <div class="pricingTable red">
+<div class="pricingTable-header">
+<i class="fa fa-cube"></i>
+<div class="price-value"> $40.00 <span class="month">per month</span> </div>
+</div>
+<h3 class="heading">Extra</h3>
+<div class="pricing-content">
+<ul>
+  <li><b>lorem ipsum</b> lorem</li>
+  <li><b>lorem ipsum</b> lorem</li>
+  <li><b>lorem ipsum</b> lorem</li>
+  <li><b>lorem ipsum</b> lorem</li>
+ 
+</ul>
+</div>
+<div class="pricingTable-signup">
+<a href="#">sign up</a>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+{% endblock %}

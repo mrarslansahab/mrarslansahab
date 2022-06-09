@@ -1,0 +1,70 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}3leasingtilbud{% endblock %}
+{% block content %}
+     <!-- HERO -->
+     <section class="hero hero-bg d-flex justify-content-center align-items-center">
+               <div class="container">
+                    <div class="row">
+
+                        <div class="col-lg-6 col-md-10 col-12 d-flex flex-column justify-content-center align-items-center">
+                              <div class="hero-text">
+
+                                   <h1 class="text-white" data-aos="fade-up">We help grow your car dealer with ready-to-buy customers
+                                   </h1>
+
+                                   <a href="contact.html" class="custom-btn btn-bg btn mt-3" data-aos="fade-up" data-aos-delay="100">Start Here !</a>
+
+                              </div>
+                        </div>
+
+                        <div class="col-lg-6 col-12">
+                          <div class="hero-image" data-aos="fade-up" data-aos-delay="300">
+
+                            <img src="{% static 'images/car.png' %}" class="img-fluid" alt="working girl">
+                          </div>
+                        </div>
+
+                    </div>
+               </div>
+     </section>
+
+
+     <!-- PROJECT DETAIL -->
+     <section  class="project-detail section-padding">
+          <div class="container">
+               <div class="row">
+
+                  <div class="col-lg-6 col-md-6 col-12 mb-5">
+
+                      <img src="{% static 'images/project/project-detail/personal-website.png' %}" class="img-fluid" alt="personal website" data-aos="fade-up">
+                    </div>
+
+                    <div class="col-lg-5 col-md-6 mr-lg-auto mt-lg-5 col-12" data-aos="fade-up" data-aos-delay="200">
+
+                      <h2>Pellentesque pretium interdum</h2>
+
+                      <p class="mt-3 mb-4">Nunc sapien nulla, interdum at diam non, aliquam vestibulum leo. Fusce laoreet malesuada ante, consectetur consequat.</p>
+
+                      <ul class="list-detail">
+                        <li><span>Curabitur commodo a sapien non</span></li>
+                        <li><span>Sed facilisis convallis turpis</span></li>
+                        <li><span>Quisque placerat augue neque</span></li>
+                        <li><span>Nullam fringilla arcu a tortor</span></li>
+                      </ul>
+                    </div>
+               </div>
+
+              <div class="col-lg-12 col-12">
+                <div style="border-radius: 2rem;" class="embed-responsive shadow embed-responsive-16by9 my-5 py-5" data-aos="fade-up">
+                    <iframe class="embed-responsive-item" width="800" height="450" src="https://www.youtube.com/embed/7Uby1gKwaM0" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                </div>
+              </div>
+
+          </div>
+     </section>
+{% endblock %}
+
+{% block javascript %}{% endblock %}
+</body>
+</html>

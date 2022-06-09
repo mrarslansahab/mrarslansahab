@@ -1,0 +1,242 @@
+{% extends 'd_base.html' %}
+{% load static %}
+{% block title %}3Leasingbudtill | Market Place{% endblock %}
+{% block content %}
+     <!-- BLOG DETAIL -->
+     <section class="project-detail mt-5 mb-5">
+          <div class="container-fluid">
+               <div class="row">
+                    <div class="col-12 col-lg-3">
+                    <div class="card" >
+                      <div class="card-body hg">
+
+                        <div class="card-header sbg text-center">
+                          <div class="card-title">
+                            <i class="fa fa-user"></i> {{ nm.f_name}} {{ nm.l_name }}
+                          </div>
+                      </div>
+                        <div class="fm-menu">
+                          <div class="list-group list-group-flush"> <a href="javascript:;" class="list-group-item py-1"><i class="bx bx-folder me-2"></i><span>Leads Back :</span></a>
+                            <div class="container">
+                              <div class="row">
+                                  <div class="col-lg-12 m-1 text-right">
+
+                                    <small>{{ nm.booked_leads }}/{{ nm.package }}</small>
+                                      <progress style="width:100%;height: 50px"  value="{{ nm.booked_leads }}" max="{{ nm.package }}">
+                                      </progress>
+
+
+
+                                  </div>
+                              </div>
+                          </div>
+                            <a href="javascript:;" class="list-group-item py-1"><i class="bx bx-devices me-2"></i><span>Pacakge : </span><strong>Custom</strong></a>
+                            <a href="javascript:;" class="list-group-item py-1"><i class="bx bx-analyse me-2"></i><span>Dealer : </span><strong>3leasingtilbud.dk</strong></a>
+                            <a href="javascript:;" class="list-group-item py-1"><i class="bx bx-plug me-2"></i>Success rate: </span><strong>60%</strong></a>
+                            <a href="javascript:;" class="list-group-item py-1"><i class="bx bx-beer me-2"></i><span>Etc...</span></a>
+                          </div>
+                        </div>
+
+                      </div>
+                    </div>
+              
+                  </div>
+                  <div class="col-12 col-lg-9">
+                    <div class="card">
+                      <div class="card-body">
+                 
+                        <div class="d-flex align-items-center">
+                          <div>
+                            <h5 class="mb-0">All Leads </h5>
+                          </div>
+                        </div>
+					<div style="max-height: 600px;overflow-y: auto;">
+                        <div class="table-responsive mt-3 ">
+                          <table class="table table-striped table-hover table-sm mb-0">
+						  
+                            <thead>
+                              <tr class="text-center ">
+                                <th>Name 
+                                </th>
+                                <th>Book</th>
+                                <th>More</th>
+                              </tr>
+                            </thead>
+                            <tbody>
+                            {% for l in leads.data %}
+                              <tr id="book-{{ forloop.counter}}">
+                                <td>
+                                    <div class="font-weight-bold text-success m-3 car-name">{{ l.6c211a1c134b2fb351db664cd8bb8cba88b1f3ab}} </div>
+                                     {% for p in person.data %}
+                                {% if l.person_id == p.id  %}
+                                 {% for pho in p.phone %}
+                                 <span class="m-3 ">Order Id :<span class="order-id">{{l.id}}</span> <span hidden class="phone">Phone :{{pho.value }}</span></span>
+                                 <span hidden class="m-3 person">{{p.name }}</span>
+                                     {% endfor %}
+                                {% endif %}
+                        {% endfor %}
+                                <span hidden class="deal-id">{{ l.id }}</span>
+                                    <span class="m-3 deal-name">{{ l.title }}</span> | <span class="m-3" >Rating: <i class="fa fa-star text-warning"></i><span class="rating">{{ l.4a3b897a3be34d03848223b9a3d2a6a0d60fd395 | slice:"2:"}}</span></span> |
+                                   <span class="m-3">DKK- <span class="dkk">{{ l.5493dcda9d70b1c6de18be59a6a25dcaf3df541e}}</span></span> | <span class="m-3">Price:<span class="price">{{ l.5493dcda9d70b1c6de18be59a6a25dcaf3df541e  }}</span>-</span>
+                                </td>
+
+                        <td class="text-center "><button onclick="book_lead({{ forloop.counter }})"  data-toggle="modal" data-target="#book_lead"  class="btn bg-gradient btn-success px-4 mt-2">
+                            Booked Now!</button></td>
+                                <td class="text-center "><button class="btn btn-info px-4 mt-2">See Info!</button></td>
+                              </tr>
+                            {% endfor %}
+                            </tbody>
+                          </table>
+                        </div>
+						</div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                </div>
+              </div>  
+          </div>
+
+     </section>
+    <div  class="modal fade text-left" id="book_lead" tabindex="-1" role="dialog" aria-labelledby="myModalLabel160" aria-hidden="true">
+      <div  class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-lg" role="document">
+        <div class="modal-content">
+          <div  class="modal-header bg-dark bg-gradient">
+            <h5 class="modal-title text-white" id="myModalLabel160"> <i class="fas fa-user-circle"></i> Book Lead </h5>
+            <button type="button"  class="close" data-dismiss="modal" aria-label="Close">
+              <i class=" text-white">X</i>
+            </button>
+          </div>
+              <form action="book_lead" id="book Lead" method="post" enctype="multipart/form-data">
+           {% csrf_token %}
+          <div class="modal-body sg">
+            <div class="card-body ">
+                <div class="row">
+                    <div class="col-lg-12 col-md-12 col-12">
+                           <div class="row">
+                            <div class="col-sm-6"><h4>Deal Name :</h4></div>
+                            <div class="col-sm-6" id="deal_name">...</div>
+
+                        </div>
+                    <input hidden class="form-control sg" name="deal_name" id="deal-name">
+                    <input hidden class="form-control sg" name="booked_by" id="booked_by" value="{{ nm.f_name }} {{ nm.l_name }}">
+                    <input hidden class="form-control sg" name="dealer_id" id="dealer_id" value="{{nm.id}}">
+                    <input hidden class="form-control sg" name="deal_id" id="deal_id">
+                    </div>
+                    <div class="col-lg-12 col-md-12 col-12">
+                        <div class="row">
+                            <div class="col-sm-6"><h4>Car Name :</h4></div>
+                            <div class="col-sm-6" id="car_name">...</div>
+
+                        </div>
+                   <input hidden class="form-control sg" name="car_name" id="car-name">
+                    </div>
+                    <div class="col-lg-12 col-md-12 col-12">
+                           <div class="row">
+                            <div class="col-sm-6"><h4>Rating :</h4></div>
+                            <div class="col-sm-6" id="rati">...</div>
+
+                        </div>
+                                <input  hidden class="form-control sg" name="rating" id="rating">
+                    </div>
+                    <div class="col-lg-12 col-md-12 col-12">
+                          <div class="row">
+                            <div class="col-sm-6"><h4>Person :</h4></div>
+                            <div class="col-sm-6" id="person">...</div>
+
+                        </div>
+                                <input hidden  class="form-control sg" name="person" id="owner-name">
+                        </div>
+                    <div class="col-lg-12 col-md-12 col-12">
+                           <div class="row">
+                            <div class="col-sm-6"><h4>Order Id :</h4></div>
+                            <div class="col-sm-6" id="order_id">...</div>
+
+                        </div>
+                                <input hidden class="form-control sg" name="order_id" id="order-id">
+                        </div>
+                    <div class="col-lg-12 col-md-12 col-12">
+                          <div class="row">
+                            <div class="col-sm-6"><h4>Dkk :</h4></div>
+                            <div class="col-sm-6" id="dk">...</div>
+
+                        </div>
+                                <input hidden class="form-control sg" name="dkk" id="dkk">
+                        </div>
+                    <div class="col-lg-12 col-md-12 col-12">
+                           <div class="row">
+                            <div class="col-sm-6"><h4>Price :</h4></div>
+                            <div class="col-sm-6" id="pric">...</div>
+                        </div>
+                                <input hidden  class="form-control sg" name="price" id="price">
+                        </div>
+                </div>
+    </div>
+          </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-outline-danger" data-dismiss="modal">
+                <i class="bx bx-x d-block d-sm-none"></i>
+                <span >Cancel</span>
+              </button>
+              <button type="submit" class="btn sbg ml-1" >
+                <i class="bx bx-check d-block d-sm-none"></i>
+                <span >Book Now !</span>
+              </button>
+            </div>
+                 </form>
+
+        </div>
+      </div>
+    </div>
+    </div>
+
+    <!--Edit Modal Ends -->
+{% endblock %}
+{% block javascript %}
+    
+    <script>
+function book_lead(id) {
+  if (id) {
+    tr_id = "#book-" + id;
+    car_name = $(tr_id).find(".car-name").text();
+    deal_id = $(tr_id).find(".deal-id").text();
+    order_id = $(tr_id).find(".order-id").text();
+    deal_name = $(tr_id).find(".deal-name").text();
+    rating = $(tr_id).find(".rating").text();
+    dkk = $(tr_id).find(".dkk").text();
+    price = $(tr_id).find(".price").text();
+    person = $(tr_id).find(".person").text();
+
+    document.getElementById("deal_name").innerHTML =deal_name ;
+    document.getElementById("car_name").innerHTML =car_name ;
+    document.getElementById("order_id").innerHTML=order_id;
+    document.getElementById("rati").innerHTML=rating;
+    document.getElementById("dk").innerHTML=dkk;
+    document.getElementById("pric").innerHTML=price;
+    document.getElementById('person').innerHTML=person;
+    $('#car-name').val(car_name);
+    $('#deal-name').val(deal_name);
+    $('#rating').val(rating);
+    $('#order-id').val(order_id);
+    $('#dkk').val(dkk);
+    $('#price').val(price);
+    $('#owner-name').val(person);
+    $('#deal_id').val(deal_id);
+
+
+        const $select1=document.querySelector("#dealer-type");
+        $select1.value=dealer_type_id
+
+      const $select2=document.querySelector("#dealer-status");
+        $select2.value=status
+  }
+}
+</script>
+      {% if messages %}
+            {% for msg in messages %}
+        <script>
+swal("Thanks!", "{{msg}}", "{{msg.extra_tags}}");
+        </script>
+            {% endfor %}
+        {% endif %}
+{% endblock %}
