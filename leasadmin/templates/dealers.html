@@ -1,0 +1,615 @@
+{% extends 'leaseadmin.html' %} {% load static %} {% block title %}3LDK Admin | Dealers{% endblock %} {% block content %}
+<link rel="stylesheet" href="{% static 'vendor/datatables-bs4/css/dataTables.bootstrap4.min.css' %}">
+<link rel="stylesheet" href="{% static 'vendor/datatables-responsive/css/responsive.bootstrap4.min.css' %}">
+<link rel="stylesheet" href="{% static 'vendor/datatables-buttons/css/buttons.bootstrap4.min.css' %}">
+<div class="app-wrapper">
+  <div class="app-content pt-3 p-md-3 p-lg-4">
+    <div class="container-xl">
+      <div class="row g-3 mb-4 align-items-center justify-content-between">
+        <div class="col-auto">
+          <h1 class="app-page-title mb-0">Dealers</h1>
+        </div>
+        <div class="col-auto">
+          <div class="page-utilities">
+            <div class="row g-2 justify-content-start justify-content-md-end align-items-center">
+              <div class="col-auto">
+                <form class="table-search-form row gx-1 align-items-center">
+                  <div class="col-auto">
+                    <input type="text" id="search-orders" name="searchorders" class="form-control search-orders" placeholder="Search">
+                  </div>
+                  <div class="col-auto">
+                    <button type="submit" class="btn app-btn-secondary">Search</button>
+                  </div>
+                </form>
+              </div>
+              <!--//col-->
+              <div class="col-auto">
+                <select class="form-select w-auto">
+                  <option selected value="option-1">All</option>
+                  <option value="option-2">This week</option>
+                  <option value="option-3">This month</option>
+                  <option value="option-4">Last 3 months</option>
+                </select>
+              </div>
+              <div class="col-auto">
+                <a class="btn app-btn-secondary" href="#">
+                  <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-download me-1" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                    <path fill-rule="evenodd" d="M.5 9.9a.5.5 0 0 1 .5.5v2.5a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-2.5a.5.5 0 0 1 1 0v2.5a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2v-2.5a.5.5 0 0 1 .5-.5z" />
+                    <path fill-rule="evenodd" d="M7.646 11.854a.5.5 0 0 0 .708 0l3-3a.5.5 0 0 0-.708-.708L8.5 10.293V1.5a.5.5 0 0 0-1 0v8.793L5.354 8.146a.5.5 0 1 0-.708.708l3 3z" />
+                  </svg> Download CSV </a>
+              </div>
+            </div>
+            <!--//row-->
+          </div>
+          <!--//table-utilities-->
+        </div>
+        <!--//col-auto-->
+      </div>
+      <!--//row-->
+      <nav id="orders-table-tab" class="orders-table-tab app-nav-tabs nav shadow-sm flex-column flex-sm-row mb-4">
+        <a class="flex-sm-fill text-sm-center nav-link active" id="orders-all-tab" data-bs-toggle="tab" href="#orders-all" role="tab" aria-controls="orders-all" aria-selected="true">All</a>
+        <a class="flex-sm-fill text-sm-center nav-link" id="orders-paid-tab" data-bs-toggle="tab" href="#orders-paid" role="tab" aria-controls="orders-paid" aria-selected="false">Approved Dealers</a>
+        <a class="flex-sm-fill text-sm-center nav-link" id="orders-pending-tab" data-bs-toggle="tab" href="#orders-pending" role="tab" aria-controls="orders-pending" aria-selected="false">Pending Dealers</a>
+        <a class="flex-sm-fill text-sm-center nav-link" id="orders-cancelled-tab" data-bs-toggle="tab" href="#rejected-dealer" role="tab" aria-controls="orders-cancelled" aria-selected="false">Rejected Dealers</a>
+      </nav>
+      <div class="tab-content" id="orders-table-tab-content">
+        <div class="tab-pane fade show active" id="orders-all" role="tabpanel" aria-labelledby="orders-all-tab">
+          <div class="app-card app-card-orders-table shadow-sm mb-5">
+            <div class="card-body">
+            <div class="table-responsive">
+              <table id="example1" class="table text-center table-striped table-bordered" cellspacing="0" width="100%">
+                <thead>
+                  <tr>
+                    <th>ID</th>
+                    <th>Name</th>
+                    <th>CVR No</th>
+                    <th>Pacakge</th>
+                    <th>email</th>
+                    <th>contact</th>
+                    <th>Telephone</th>
+                    <th>Dealer Type</th>
+                    <th>Postal Code</th>
+                    <th>City</th>
+                    <th>Address</th>
+                    <th>Status</th>
+                  </tr>
+                </thead>
+                <tbody> {% for ad in ald %} <tr>
+                    <td>{{ ad.id }}</td>
+                    <td>{{ ad.f_name }} {{ ad.l_name }}</td>
+                    <td>{{ ad.cvrno}}</td>
+                    <td>{{ ad.package}}</td>
+                    <td>{{ ad.email }}</td>
+                    <td>{{ ad.contact }}</td>
+                    <td>{{ ad.Telephone }}</td>
+                    <td>{{ ad.dealer_type.name }}</td>
+                    <td>{{ ad.postal_code }}</td>
+                    <td>{{ ad.city }}</td>
+                    <td>{{ ad.address }}</td> {% if 'pending' in ad.status %} <td>
+                      <span class="badge bg-warning bg-gradient xl ">{{ ad.status }}</span>
+                    </td> {% elif 'approved' in ad.status %} <td>
+                      <span class="badge bg-success bg-gradient">{{ ad.status }}</span>
+                    </td> {% else %} <td>
+                      <span class="badge bg-danger bg-gradient">{{ ad.status }}</span>
+                    </td> {% endif %}
+                  </tr> {% endfor %} </tbody>
+              </table>
+            </div>
+            </div>
+            <!--//app-card-body-->
+          </div>
+        </div>
+          <!--//app-card-->
+        <!--//tab-pane-->
+        <div class="tab-pane fade" id="orders-paid" role="tabpanel" aria-labelledby="orders-paid-tab">
+          <div class="app-card app-card-orders-table mb-5">
+            <div class="card-body">
+            <div class="table-responsive">
+                <table id="example3" class="table  text-center table-striped table-bordered" cellspacing="0" width="100%">
+                  <thead>
+                    <tr>
+                      <th>ID</th>
+                      <th>First Name</th>
+                      <th>Last Name</th>
+                      <th>CVR No</th>
+                      <th>Package Leads</th>
+                      <th>email</th>
+                      <th>contact</th>
+                      <th>Telephone</th>
+                      <th>Dealer Type</th>
+                      <th hidden>Dealer Type ID</th>
+                      <th>Postal Code</th>
+                      <th>City</th>
+                      <th>Address</th>
+                      <th>Status</th>
+                    </tr>
+                  </thead>
+                  <tbody> {% for ad in aad %} <tr id="edit-{{ ad.id }}">
+                      <td>{{ ad.id }}</td>
+                      <td class="first_name">{{ ad.f_name }}</td>
+                      <td class="last_name">{{ ad.l_name }}</td>
+                      <td class="cvrno">{{ ad.cvrno}}</td>
+                      <td class="package">{{ ad.package}}</td>
+                      <td class="email">{{ ad.email }}</td>
+                      <td class="contact">{{ ad.contact }}</td>
+                      <td class="telephone">{{ ad.Telephone }}</td>
+                      <td class="dealer_type">{{ ad.dealer_type.name }}</td>
+                      <td hidden class="dealer_type_id">{{ ad.dealer_type.id }}</td>
+                      <td class="postal_code">{{ ad.postal_code }}</td>
+                      <td class="city">{{ ad.city }}</td>
+                      <td class="address">{{ ad.address }}</td>
+                      <td>
+                          <a onclick="a_accountupdate({{ ad.id }})"  data-bs-toggle="modal" data-bs-target="#dealer_account_update"  href="#"> <span  class="badge bg-success bg-gradient status">{{ ad.status }}</span></a>
+                      </td>
+                    </tr>
+                  {% endfor %}
+                  </tbody>
+                </table>
+            </div>
+              </div>
+              <!--//table-responsive-->
+            </div>
+            <!--//app-card-body-->
+          </div>
+
+        <!--//tab-pane-->
+        <div class="tab-pane fade" id="orders-pending" role="tabpanel" aria-labelledby="orders-pending-tab">
+          <div class="app-card app-card-orders-table mb-5">
+            <div class="card-body">
+            <div class="table-responsive">
+                <table id="example5" class="table  text-center table-striped table-bordered" cellspacing="0" width="100%">
+                  <thead>
+                    <tr>
+                      <th>ID</th>
+                      <th>First Name</th>
+                      <th>Last Name</th>
+                      <th>CVR No</th>
+                      <th>Package Leads</th>
+                      <th>email</th>
+                      <th>contact</th>
+                      <th>Telephone</th>
+                      <th>Dealer Type</th>
+                      <th hidden>Dealer Type ID</th>
+                      <th>Postal Code</th>
+                      <th>City</th>
+                      <th>Address</th>
+                      <th>Status</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                  {% for ad in apd %} <tr id="edit-{{ ad.id }}">
+                      <td>{{ ad.id }}</td>
+                      <td class="p_first_name">{{ ad.f_name }}</td>
+                      <td class="p_last_name">{{ ad.l_name }}</td>
+                      <td class="p_cvrno">{{ ad.cvrno}}</td>
+                      <td class="p_package">{{ ad.package}}</td>
+                      <td class="p_email">{{ ad.email }}</td>
+                      <td class="p_contact">{{ ad.contact }}</td>
+                      <td class="p_telephone">{{ ad.Telephone }}</td>
+                      <td class="p_dealer_type">{{ ad.dealer_type.name }}</td>
+                      <td hidden class="p_dealer_type_id">{{ ad.dealer_type.id }}</td>
+                      <td class="p_postal_code">{{ ad.postal_code }}</td>
+                      <td class="p_city">{{ ad.city }}</td>
+                      <td class="p_address">{{ ad.address }}</td>
+                      <td>
+                          <a onclick="p_accountupdate({{ ad.id }})"  data-bs-toggle="modal" data-bs-target="#dealer_account_update"  href="#"> <span  class="badge bg-warning bg-gradient p_status">{{ ad.status }}</span></a>
+                      </td>
+                    </tr>
+                  {% endfor %}
+                  </tbody>
+                </table>
+            </div>
+              </div>
+              <!--//table-responsive-->
+            </div>
+            <!--//app-card-body-->
+          </div>
+          <!--//app-card-->
+
+
+    <div class="tab-pane fade" id="rejected-dealer" role="tabpanel" aria-labelledby="orders-pending-tab">
+          <div class="app-card app-card-orders-table mb-5">
+            <div class="card-body">
+                <div class="table-responsive">
+                <table id="example7" class="table  text-center table-striped table-bordered" cellspacing="0" width="100%">
+                    <thead>
+                    <tr>
+                      <th>ID</th>
+                      <th>First Name</th>
+                      <th>Last Name</th>
+                      <th>CVR No</th>
+                      <th>Package Leads</th>
+                      <th>email</th>
+                      <th>contact</th>
+                      <th>Telephone</th>
+                      <th>Dealer Type</th>
+                      <th hidden>Dealer Type ID</th>
+                      <th>Postal Code</th>
+                      <th>City</th>
+                      <th>Address</th>
+                      <th>Status</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                  {% for ad in ard %} <tr id="edit-{{ ad.id }}">
+                      <td>{{ ad.id }}</td>
+                      <td class="r_first_name">{{ ad.f_name }}</td>
+                      <td class="r_last_name">{{ ad.l_name }}</td>
+                      <td class="r_cvrno">{{ ad.cvrno}}</td>
+                      <td class="r_package">{{ ad.package}}</td>
+                      <td class="r_email">{{ ad.email }}</td>
+                      <td class="r_contact">{{ ad.contact }}</td>
+                      <td class="r_telephone">{{ ad.Telephone }}</td>
+                      <td class="r_dealer_type">{{ ad.dealer_type.name }}</td>
+                      <td hidden class="r_dealer_type_id">{{ ad.dealer_type.id }}</td>
+                      <td class="r_postal_code">{{ ad.postal_code }}</td>
+                      <td class="r_city">{{ ad.city }}</td>
+                      <td class="r_address">{{ ad.address }}</td>
+                      <td>
+                          <a onclick="r_accountupdate({{ ad.id }})" data-bs-toggle="modal" data-bs-target="#dealer_account_update"    href="#"> <span  class="badge bg-danger bg-gradient r_status">{{ ad.status }}</span></a>
+                      </td>
+                    </tr>
+                  {% endfor %}
+                  </tbody>
+                </table>
+                </div>
+              </div>
+              <!--//table-responsive-->
+            </div>
+            <!--//app-card-body-->
+          </div>
+          <!--//app-card-->
+        </div>
+        <!--//tab-pane-->
+      </div>
+      <!--//tab-content-->
+    </div>
+    <!--//container-fluid-->
+  </div>
+  <!--//app-content-->
+</div>
+    <!-- Edit  Modal -->
+    <div class="modal fade text-left" id="dealer_account_update" tabindex="-1" role="dialog" aria-labelledby="myModalLabel160" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-lg" role="document">
+        <div class="modal-content">
+          <div class="modal-header bg-primary bg-gradient">
+            <h5 class="modal-title text-white" id="myModalLabel160"> <i class="fas fa-user-circle"></i> Dealer Account Status </h5>
+            <button type="button" style="border-radius: 0.3rem" class="close bg-gradient bg-danger" data-bs-dismiss="modal" aria-label="Close">
+              <i class=" text-white">X</i>
+            </button>
+          </div>
+          <div class="modal-body sg">
+            <div class="card-body ">
+       <form action="update_dealer/" id="edit-account-form" method="post">
+           {% csrf_token %}
+           <div class="row">
+               <div class="col-lg-6 col-md-6 col-12">
+              <div class="form-group">
+                  <label class="col-form-label">Dealer ID :</label>
+                  <input type="text" hidden placeholder="ID..." class="form-control" name="edit_id"  id="dealer-id">
+                 <h1 id="dealer-id2"></h1>
+                </div>
+               </div>
+      <div class="col-lg-6 col-md-6 col-12">
+              <div class="form-group">
+                  <label class="col-form-label">First Name :</label>
+                  <input type="text" placeholder="First Name..." class="form-control" name="edit_f_name"  id="dealer-f-name">
+                </div>
+              </div> <div class="col-lg-6 col-md-6 col-12">
+              <div class="form-group">
+                  <label class="col-form-label">Last Name :</label>
+                  <input type="text" placeholder="Last Name..." class="form-control" name="edit_l_name"  id="dealer-l-name">
+                </div>
+              </div>
+               <div class="col-lg-6 col-md-6 col-12">
+              <div class="form-group">
+                  <label class="col-form-label">CVR No :</label>
+                  <input type="text" placeholder="CVR no..." class="form-control" name="edit_cvr"  id="dealer-cvr">
+                </div>
+              </div>
+               <div class="col-lg-6 col-md-6 col-12">
+              <div class="form-group">
+                  <label class="col-form-label">Package Leads:</label>
+                  <input type="text" placeholder="Package..." class="form-control" name="edit_package"  id="dealer-package">
+                </div>
+              </div>
+               <div class="col-lg-6 col-md-6 col-12">
+              <div class="form-group">
+                  <label class="col-form-label">Email:</label>
+                  <input type="text" placeholder="email..." class="form-control" name="edit_email"  id="dealer-email">
+                </div>
+              </div>
+               <div class="col-lg-6 col-md-6 col-12">
+              <div class="form-group">
+                  <label class="col-form-label">contact:</label>
+                  <input type="text" placeholder="contact..." class="form-control" name="edit_contact"  id="dealer-contact">
+                </div>
+              </div>
+               <div class="col-lg-6 col-md-6 col-12">
+              <div class="form-group">
+                  <label class="col-form-label">Telephone:</label>
+                  <input type="text" placeholder="Telephone..." class="form-control" name="edit_telephone"  id="dealer-telephone">
+                </div>
+              </div>
+           <div class="col-lg-6 col-md-6 col-12">
+                <div class="form-group">
+                  <label class="col-form-label">Dealer Type :</label>
+                    <select name="edit_dealer_type" class="form-select" id="dealer-type">
+                    {% if dts %}
+                        {% for d in dts %}
+                        <option value="{{ d.id }}">{{ d.name }}</option>
+                       {% endfor %}
+                            {% else %}
+                        <option value="{{ d.id }}">please Add Type First !Thanks</option>
+                        {% endif %}
+
+                    </select>
+                </div>
+              </div>
+               <div class="col-lg-6 col-md-6 col-12">
+                <div class="form-group">
+                  <label class="col-form-label">Postal Code:</label>
+                  <input type="text" placeholder="City..." class="form-control" name="edit_postal_code"  id="dealer-postal_code">
+                </div>
+              </div><div class="col-lg-6 col-md-6 col-12">
+                <div class="form-group">
+                  <label class="col-form-label">City:</label>
+                  <input type="text" placeholder="City..." class="form-control" name="edit_city"  id="dealer-city">
+                </div>
+              </div>
+               <div class="col-lg-6 col-md-6 col-12">
+                <div class="form-group">
+                  <label class="col-form-label">Address:</label>
+                  <input type="text" placeholder="Address..." class="form-control" name="edit_address"  id="dealer-address">
+                </div>
+              </div>
+               <div class="col-lg-12 col-md-12 col-12">
+                <div class="form-group">
+                  <label class="col-form-label">Status:</label>
+                 <select name="edit_status" id="dealer-status" class="form-select">
+                     <option value="approved">approve</option>
+                     <option value="pending">pending</option>
+                     <option value="rejected">reject</option>
+                 </select>
+                </div>
+              </div>
+           </div>
+    </div>
+
+          </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-outline-danger" data-bs-dismiss="modal">
+                <i class="bx bx-x d-block d-sm-none"></i>
+                <span >Cancel</span>
+              </button>
+              <button type="submit" class="btn sbg ml-1" >
+                <i class="bx bx-check d-block d-sm-none"></i>
+                <span >Update</span>
+              </button>
+            </div>
+                 </form>
+
+        </div>
+      </div>
+    </div>
+    </div>
+
+    <!--Edit Modal Ends -->
+
+
+
+<!--//app-wrapper--> {% endblock %} {% block javascript %}
+<!-- DataTables  & Plugins -->
+<script src="{% static 'vendor/datatables/jquery.dataTables.min.js' %}"></script>
+<script src="{% static 'vendor/datatables-bs4/js/dataTables.bootstrap4.min.js' %}"></script>
+<script src="{% static 'vendor/datatables-responsive/js/dataTables.responsive.min.js' %}"></script>
+<script src="{% static 'vendor/datatables-responsive/js/responsive.bootstrap4.min.js' %}"></script>
+<script src="{% static 'vendor/datatables-buttons/js/dataTables.buttons.min.js' %}"></script>
+<script src="{% static 'vendor/datatables-buttons/js/buttons.bootstrap4.min.js' %}"></script>
+<script src="{% static 'vendor/jszip/jszip.min.js' %}"></script>
+<script src="{% static 'vendor/pdfmake/pdfmake.min.js' %}"></script>
+<script src="{% static 'vendor/pdfmake/vfs_fonts.js' %}"></script>
+<script src="{% static 'vendor/datatables-buttons/js/buttons.html5.min.js' %}"></script>
+<script src="{% static 'vendor/datatables-buttons/js/buttons.print.min.js' %}"></script>
+<script src="{% static 'vendor/datatables-buttons/js/buttons.colVis.min.js' %}"></script>
+<script src="script.js"></script>
+<script>
+  $(function() {
+      document.title="3LDK";
+    $("#example1").DataTable({
+      "responsive": false,
+      "lengthChange": true,
+      "autoWidth": true,
+      "buttons": ["csv", "excel", "pdf", "print","colvis"]
+    }).buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)');
+    $('#example2').DataTable({
+      "paging": true,
+      "lengthChange": true,
+      "searching": true,
+      "ordering": true,
+      "info": true,
+      "autoWidth": true,
+      "responsive": true,
+
+    });
+  });
+</script>
+    <script>
+  $(function() {
+    $("#example3").DataTable({
+      "responsive": true,
+      "lengthChange": true,
+      "autoWidth": true,
+      "buttons": ["csv", "excel", "pdf", "print", ]
+    }).buttons().container().appendTo('#example3_wrapper .col-md-6:eq(0)');
+    $('#example4').DataTable({
+       "paging": true,
+      "lengthChange": true,
+      "searching": true,
+      "ordering": true,
+      "info": true,
+      "autoWidth": true,
+      "responsive": true,
+    });
+  });
+</script>
+    <script>
+  $(function() {
+    $("#example5").DataTable({
+     "responsive": true,
+      "lengthChange": true,
+      "autoWidth": true,
+      "buttons": ["csv", "excel", "pdf", "print", ]
+    }).buttons().container().appendTo('#example5_wrapper .col-md-6:eq(0)');
+    $('#example6').DataTable({
+       "paging": true,
+      "lengthChange": true,
+      "searching": true,
+      "ordering": true,
+      "info": true,
+      "autoWidth": true,
+      "responsive": true,
+    });
+  });
+</script>
+    <script>
+  $(function() {
+    $("#example7").DataTable({
+      "responsive": true,
+      "lengthChange": true,
+      "autoWidth": true,
+      "buttons": ["csv", "excel", "pdf", "print", ]
+    }).buttons().container().appendTo('#example7_wrapper .col-md-6:eq(0)');
+    $('#example8').DataTable({
+       "paging": true,
+      "lengthChange": true,
+      "searching": true,
+      "ordering": true,
+      "info": true,
+      "autoWidth": true,
+      "responsive": true,
+    });
+  });
+</script>
+    <script>
+function a_accountupdate(id) {
+  if (id) {
+    tr_id = "#edit-" + id;
+    fname = $(tr_id).find(".first_name").text();
+    lname = $(tr_id).find(".last_name").text();
+    cvrno = $(tr_id).find(".cvrno").text();
+    package = $(tr_id).find(".package").text();
+    email = $(tr_id).find(".email").text();
+    contact = $(tr_id).find(".contact").text();
+    telephone = $(tr_id).find(".telephone").text();
+    postal_code = $(tr_id).find(".postal_code").text();
+    dealer_type_id=$(tr_id).find(".dealer_type_id").text();
+    city = $(tr_id).find(".city").text();
+    address = $(tr_id).find(".address").text();
+    status=$(tr_id).find(".status").text();
+    $('#dealer-id').val(id);
+    document.getElementById("dealer-id2").innerHTML = id;
+    $('#dealer-f-name').val(fname);
+    $('#dealer-l-name').val(lname);
+    $('#dealer-cvr').val(cvrno);
+    $('#dealer-package').val(package);
+    $('#dealer-email').val(email);
+    $('#dealer-contact').val(contact);
+    $('#dealer-telephone').val(telephone);
+    $('#dealer-postal_code').val(postal_code);
+    $('#dealer-city').val(city);
+    $('#dealer-address').val(address);
+
+
+        const $select1=document.querySelector("#dealer-type");
+        $select1.value=dealer_type_id
+
+      const $select2=document.querySelector("#dealer-status");
+        $select2.value=status
+  }
+}
+</script>
+    <script>
+function p_accountupdate(id) {
+  if (id) {
+    tr_id = "#edit-" + id;
+    fname = $(tr_id).find(".p_first_name").text();
+    lname = $(tr_id).find(".p_last_name").text();
+    cvrno = $(tr_id).find(".p_cvrno").text();
+    package = $(tr_id).find(".p_package").text();
+    email = $(tr_id).find(".p_email").text();
+    contact = $(tr_id).find(".p_contact").text();
+    telephone = $(tr_id).find(".p_telephone").text();
+    postal_code = $(tr_id).find(".p_postal_code").text();
+    dealer_type_id=$(tr_id).find(".p_dealer_type_id").text();
+    city = $(tr_id).find(".p_city").text();
+    address = $(tr_id).find(".p_address").text();
+    status=$(tr_id).find(".p_status").text();
+    $('#dealer-id').val(id);
+    document.getElementById("dealer-id2").innerHTML = id;
+    $('#dealer-f-name').val(fname);
+    $('#dealer-l-name').val(lname);
+    $('#dealer-cvr').val(cvrno);
+    $('#dealer-package').val(package);
+    $('#dealer-email').val(email);
+    $('#dealer-contact').val(contact);
+    $('#dealer-telephone').val(telephone);
+    $('#dealer-postal_code').val(postal_code);
+    $('#dealer-city').val(city);
+    $('#dealer-address').val(address);
+
+
+        const $select1=document.querySelector("#dealer-type");
+        $select1.value=dealer_type_id
+
+      const $select2=document.querySelector("#dealer-status");
+        $select2.value=status
+  }
+}
+</script>
+    <script>
+function r_accountupdate(id) {
+  if (id) {
+    tr_id = "#edit-" + id;
+    fname = $(tr_id).find(".r_first_name").text();
+    lname = $(tr_id).find(".r_last_name").text();
+    cvrno = $(tr_id).find(".r_cvrno").text();
+    package = $(tr_id).find(".r_package").text();
+    email = $(tr_id).find(".r_email").text();
+    contact = $(tr_id).find(".r_contact").text();
+    telephone = $(tr_id).find(".r_telephone").text();
+    postal_code = $(tr_id).find(".r_postal_code").text();
+    dealer_type_id=$(tr_id).find(".r_dealer_type_id").text();
+    city = $(tr_id).find(".r_city").text();
+    address = $(tr_id).find(".r_address").text();
+    status=$(tr_id).find(".r_status").text();
+    $('#dealer-id').val(id);
+    document.getElementById("dealer-id2").innerHTML = id;
+    $('#dealer-f-name').val(fname);
+    $('#dealer-l-name').val(lname);
+    $('#dealer-cvr').val(cvrno);
+    $('#dealer-package').val(package);
+    $('#dealer-email').val(email);
+    $('#dealer-contact').val(contact);
+    $('#dealer-telephone').val(telephone);
+    $('#dealer-postal_code').val(postal_code);
+    $('#dealer-city').val(city);
+    $('#dealer-address').val(address);
+
+
+        const $select1=document.querySelector("#dealer-type");
+        $select1.value=dealer_type_id
+
+      const $select2=document.querySelector("#dealer-status");
+        $select2.value=status
+  }
+}
+</script>
+         {% if messages %}
+            {% for msg in messages %}
+        <script>
+swal("Thanks!", "{{msg}}", "{{msg.extra_tags}}");
+        </script>
+            {% endfor %}
+        {% endif %}
+{% endblock %}
